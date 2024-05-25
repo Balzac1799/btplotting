@@ -37,7 +37,7 @@ class DataClockHandler:
             data = strategy.data
         else:
             data = strategy.getdatabyname(dataname)
-        self._rightedge = data.p._get('rightedge', True)
+        self._rightedge = data.p._get('rightedge', True)  # TODO: seems that new version backtrader data doesn't have a rightedge param so self._rightedge always True
 
         self._clk_cache = None
         self.last_endidx = -1
@@ -160,7 +160,7 @@ class DataClockHandler:
                 # check if value belongs to next candle, if current value
                 # belongs to next target candle don't use this value and
                 # stop here and use previously set value
-                if c_start and c_start > t_end:
+                if c_start and c_start >= t_end:  # TODO: change from c_start > t_end to c_start >= t_end fix missing first candle error
                     break
                 # forward until start of target start is readched
                 # move forward in source data and remember the last value
